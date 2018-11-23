@@ -25,27 +25,7 @@ class DefaultController extends BaseController
         $categories = $this->getDoctrine()->getRepository(Category::class)->findBy([],['name'=>'ASC']);
         return $this->render('default/homepage.html.twig',["books"=> $books, "categories"=>$categories]);
     }
-    /**
-     * @Route("/{nom}", name="default", methods={"GET"})
-     */
-    public function index(string $nom, Request $request)
-    {
-        $author = $this->getDoctrine()->getRepository(Author::class)->findOneBy(["lastname"=>$nom]);
 
-        if(!$author){
-            throw $this->createNotFoundException("auteur introuvable");
-        }
-
-        return $this->render("default/index.html.twig", ["author"=>$author]);
-    }
-
-    /**
-     * @Route("/book/{slug}", name ="show-book")
-     */
-    public function showBook(Book $book)
-    {
-        return new Response($book->getTitle());
-    }
 
 
 }

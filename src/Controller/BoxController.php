@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/box")
@@ -16,12 +17,14 @@ class BoxController extends AbstractController
 {
     /**
      * @Route("/", name="box_index", methods="GET")
+     * @IsGranted("ROLE_ADMIN")
      */
     public function index(): Response
     {
         $boxes = $this->getDoctrine()
             ->getRepository(Box::class)
             ->findAll();
+
 
         return $this->render('box/index.html.twig', ['boxes' => $boxes]);
     }
